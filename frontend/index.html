@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>PlanMyTrip_AI</title>
+</head>
+<body>
+<h1>PlanMyTrip_AI</h1>
+
+<input id="name" placeholder="Name">
+<input id="category" placeholder="Category">
+<input id="budget" placeholder="Budget">
+
+<button onclick="save()">Save</button>
+<button onclick="load()">Load</button>
+
+<div id="output"></div>
+
+<script>
+async function save(){
+  await fetch("http://127.0.0.1:5000/save",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      name:document.getElementById("name").value,
+      category:document.getElementById("category").value,
+      budget:document.getElementById("budget").value
+    })
+  });
+  alert("Saved");
+}
+
+async function load(){
+  const res = await fetch("http://127.0.0.1:5000/get");
+  const data = await res.json();
+  document.getElementById("output").innerHTML = JSON.stringify(data);
+}
+</script>
+
+</body>
+</html>
